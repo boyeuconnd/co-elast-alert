@@ -1,0 +1,68 @@
+# Alert when the rate of events exceeds a threshold
+
+# (Optional)
+# Elasticsearch host
+es_host: host.docker.internal
+
+# (Optional)
+# Elasticsearch port
+es_port: 9200
+
+# (OptionaL) Connect with SSL to Elasticsearch
+#use_ssl: True
+
+# (Optional) basic-auth username and password for Elasticsearch
+#es_username: elastic
+#es_password: changeme
+
+# (Required)
+# Rule name, must be unique
+name: CO_PLATFORM_HEALTHCHECK
+
+# (Required)
+# Type of alert.
+# the frequency rule type alerts when num_events events occur with timeframe time
+type: frequency
+
+# (Required)
+# Index to search, wildcard supported
+index: demo_index
+
+# (Required, frequency specific)
+# Alert when this many documents matching the query occur within a timeframe
+num_events: 2
+
+# (Required, frequency specific)
+# num_events must occur within this amount of time to trigger an alert
+timeframe:
+  seconds: 10
+#  minutes: 3
+
+# (Required)
+# A list of Elasticsearch filters used for find events
+# These filters are joined with AND and nested in a filtered query
+# For more info: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html
+filter:
+- query:
+    query_string:
+      query: "status: NOT_SERVING"
+
+
+
+# (Required)
+# The alert is use when a match is found
+alert:
+- slack:
+      slack_webhook_url: "https://hooks.slack.com/services/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"
+      slack_username_override: "elastalert"
+
+# (required, email specific)
+# a list of email addresses to send alerts to
+#email:
+#- "nhatnor123@gmail.com"
+#
+#smtp_host: "smtp.gmail.com"
+#smtp_port: 465
+#smtp_ssl: true
+#from_addr: "nhatnl@fastgo.mobi"
+#smtp_auth_file: '../smtp_auth_file.yaml'
