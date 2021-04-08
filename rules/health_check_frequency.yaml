@@ -53,7 +53,7 @@ filter:
 # The alert is use when a match is found
 alert:
 - slack:
-      slack_webhook_url: "https://hooks.slack.com/services/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"
+      slack_webhook_url: "https://hooks.slack.com/services/xxxxxxx"
       slack_username_override: "elastalert"
 
 # (required, email specific)
